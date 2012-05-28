@@ -237,6 +237,9 @@
    </property>
   </action>
   <action name="actionSpaces">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>&amp;Spaces</string>
    </property>
@@ -245,6 +248,12 @@
    </property>
   </action>
   <action name="actionList">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>&amp;List</string>
    </property>

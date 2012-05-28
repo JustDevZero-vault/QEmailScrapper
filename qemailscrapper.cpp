@@ -42,10 +42,18 @@ QEmailScrapper::QEmailScrapper(QWidget *parent) :
     g_text = m_unscrappedtext;
 
     g_filename = "";
-    g_separator = "\n";
+
+    m_separator_one = "";
+    m_separator_two = "\n";
+
+
+    __minfontsize=1;
+    setFontSize(11);
+
 
     connect(m_unscrappedtext,SIGNAL(textChanged()),this,SLOT(activated_unscrapped()));
     connect(m_scrappedtext,SIGNAL(textChanged()),this,SLOT(activated_scrapped()));
+
 }
 
 QEmailScrapper::~QEmailScrapper()
@@ -74,6 +82,15 @@ void QEmailScrapper::fullscreen()
         showFullScreen();
         mui_statusbar->showMessage("Full screen enabled");
     } // end if
+}
+
+void QEmailScrapper::setFontSize(const int &points)
+{
+    g_font = QFont("Arial");
+    g_fontsize=points;
+    g_font.setPointSize(g_fontsize);
+    m_unscrappedtext->setFont(g_font);
+    m_scrappedtext->setFont(g_font);
 }
 
 void QEmailScrapper::on_actionShowTopToolbar_triggered(bool checked)
@@ -201,12 +218,11 @@ void QEmailScrapper::on_actionScrap_triggered()
     if ( !g_emailList.isEmpty() ) {
         for (QStringList::iterator it = g_emailList.begin(); it != g_emailList.end(); ++it) {
             QString iter = *it;
-            contentScrapped += QString(iter+g_separator);
+            contentScrapped += QString(iter+m_separator_one + m_separator_two);
         } // end for
     } // end if
 
     m_scrappedtext->clear();
-
     m_scrappedtext->appendPlainText(contentScrapped.trimmed());
     mui_statusbar->showMessage("Scrap done");
 }
@@ -223,34 +239,51 @@ void QEmailScrapper::on_actionSelectAll_triggered()
     mui_statusbar->showMessage("All selected");
 }
 
-void QEmailScrapper::on_actionSpaces_triggered()
+void QEmailScrapper::on_actionSpaces_triggered(bool checked)
 {
-    g_separator = " ";
-    changeSeparation( g_separator );
+    if (checked == true) {
+        m_separator_two = " ";
+        ui->actionList->setChecked(false);
+    }
+    else {
+        m_separator_two = "\n";
+        ui->actionList->setChecked(true);
+    }
+    changeSeparation( m_separator_one, m_separator_two );
 }
 
-void QEmailScrapper::on_actionList_triggered()
+void QEmailScrapper::on_actionList_triggered(bool checked)
 {
-    g_separator = "\n";
-    changeSeparation( g_separator );
+    if (checked == true) {
+        m_separator_two = "\n";
+        ui->actionSpaces->setChecked(false);
+    }
+    else {
+        m_separator_two = " ";
+        ui->actionSpaces->setChecked(true);
+    }
+    changeSeparation( m_separator_one, m_separator_two );
+
 }
 
 
-void QEmailScrapper::on_actionCommas_triggered()
+void QEmailScrapper::on_actionCommas_triggered(bool checked)
 {
-    g_separator = ", ";
-    changeSeparation( g_separator );
+    m_separator_one = ",";
+    changeSeparation( m_separator_one, m_separator_two );
 }
 
-void QEmailScrapper::on_actionSemicolon_triggered()
+void QEmailScrapper::on_actionSemicolon_triggered(bool checked)
 {
-    g_separator = ";";
-    changeSeparation( g_separator );
+    m_separator_one = ";";
+    changeSeparation( m_separator_one, m_separator_two );
 }
 
-void QEmailScrapper::changeSeparation(const QString &separator )
+void QEmailScrapper::changeSeparation(const QString &separator_one, const QString &separator_two )
 {
     QString contentScrapped = "";
+    m_separator_one=separator_one;
+    m_separator_two=separator_two;
     int iterador = 0;
     if ( !g_emailList.isEmpty() ) {
         for (QStringList::iterator it = g_emailList.begin(); it != g_emailList.end(); ++it) {
@@ -260,7 +293,7 @@ void QEmailScrapper::changeSeparation(const QString &separator )
                 contentScrapped += QString(iteritem);
             }
             else {
-                contentScrapped += QString(iteritem + separator);
+                contentScrapped += QString(iteritem + m_separator_one + m_separator_two);
 
             }
         } // end for
@@ -268,4 +301,24 @@ void QEmailScrapper::changeSeparation(const QString &separator )
 
     m_scrappedtext->clear();
     m_scrappedtext->appendPlainText(contentScrapped.trimmed());
+}
+
+void QEmailScrapper::on_actionZoomIn_triggered()
+{
+    g_fontsize+=1;
+    setFontSize(g_fontsize);
+}
+
+void QEmailScrapper::on_actionZoomOut_triggered()
+{
+    if (g_fontsize != __minfontsize)
+    {
+        g_fontsize-=1;
+    }
+    setFontSize(g_fontsize);
+}
+
+void QEmailScrapper::on_actionZoomReset_triggered()
+{
+    setFontSize(11);
 }

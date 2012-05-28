@@ -45,8 +45,9 @@ public:
         int active_plaintextedit;
         QPlainTextEdit *g_text;
         QStringList g_emailList;
-        QString g_separator;
         QString g_filename;
+        QFont g_font;
+        int g_fontsize;
     ~QEmailScrapper();
 
    private slots:
@@ -55,7 +56,8 @@ public:
         void activated_unscrapped();
         void activated_scrapped();
         void openFile(const QString &filechosed);
-        void changeSeparation(const QString &separator);
+        void changeSeparation(const QString &separator_one, const QString &separator_two);
+        void setFontSize(const int &points);
 
         void on_actionFullScreen_triggered();
 
@@ -83,13 +85,19 @@ public:
 
         void on_actionSelectAll_triggered();
 
-        void on_actionSpaces_triggered();
+        void on_actionSpaces_triggered(bool checked);
 
-        void on_actionList_triggered();
+        void on_actionList_triggered(bool checked);
 
-        void on_actionCommas_triggered();
+        void on_actionCommas_triggered(bool checked);
 
-        void on_actionSemicolon_triggered();
+        void on_actionSemicolon_triggered(bool checked);
+
+        void on_actionZoomIn_triggered();
+
+        void on_actionZoomOut_triggered();
+
+        void on_actionZoomReset_triggered();
 
     private:
         Ui::QEmailScrapper *ui;
@@ -99,6 +107,9 @@ public:
 
         QPlainTextEdit *m_unscrappedtext;
         QPlainTextEdit *m_scrappedtext;
+        int __minfontsize;
+        QString m_separator_one;
+        QString m_separator_two;
 
         QStatusBar *mui_statusbar;
         QToolBar *mui_toolbar;
