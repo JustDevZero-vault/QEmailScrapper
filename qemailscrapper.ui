@@ -96,6 +96,22 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <widget class="QMenu" name="menuAdvanced">
+     <property name="title">
+      <string>Advanced</string>
+     </property>
+     <addaction name="actionGotoBlockStart"/>
+     <addaction name="actionGotoBlockEnd"/>
+     <addaction name="separator"/>
+     <addaction name="actionZoomIn"/>
+     <addaction name="actionZoomOut"/>
+     <addaction name="actionZoomReset"/>
+    </widget>
+    <widget class="QMenu" name="menuType_Here">
+     <property name="title">
+      <string>Type Here</string>
+     </property>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -105,6 +121,9 @@
     <addaction name="actionDelete"/>
     <addaction name="separator"/>
     <addaction name="actionSelectAll"/>
+    <addaction name="separator"/>
+    <addaction name="menuAdvanced"/>
+    <addaction name="menuType_Here"/>
    </widget>
    <widget class="QMenu" name="menu_Window">
     <property name="title">
@@ -115,8 +134,18 @@
     <addaction name="actionShowBottomToolbar"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuFormat">
+    <property name="title">
+     <string>Format</string>
+    </property>
+    <addaction name="actionList"/>
+    <addaction name="actionSpaces"/>
+    <addaction name="actionCommas"/>
+    <addaction name="actionSemicolon"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
+   <addaction name="menuFormat"/>
    <addaction name="menu_Tools"/>
    <addaction name="menu_Window"/>
    <addaction name="menu_Help"/>
@@ -162,8 +191,8 @@
    </attribute>
    <addaction name="actionSemicolon"/>
    <addaction name="actionCommas"/>
-   <addaction name="actionList"/>
    <addaction name="actionSpaces"/>
+   <addaction name="actionList"/>
   </widget>
   <action name="actionOpenFile">
    <property name="text">
@@ -210,6 +239,9 @@
   <action name="actionSpaces">
    <property name="text">
     <string>&amp;Spaces</string>
+   </property>
+   <property name="toolTip">
+    <string>Spaces</string>
    </property>
   </action>
   <action name="actionList">
@@ -340,6 +372,46 @@
    </property>
    <property name="text">
     <string>Show &amp;Bottom Toolbar</string>
+   </property>
+  </action>
+  <action name="actionGotoBlockStart">
+   <property name="text">
+    <string>Go to Block Start</string>
+   </property>
+  </action>
+  <action name="actionGotoBlockEnd">
+   <property name="text">
+    <string>Go to Block End</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionZoomReset">
+   <property name="text">
+    <string>Zoom Reset</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
    </property>
   </action>
  </widget>
