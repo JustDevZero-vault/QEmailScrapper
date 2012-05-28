@@ -262,11 +262,17 @@
    </property>
   </action>
   <action name="actionCommas">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>&amp;Commas</string>
    </property>
   </action>
   <action name="actionSemicolon">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Semicolo&amp;n</string>
    </property>

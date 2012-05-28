@@ -269,13 +269,25 @@ void QEmailScrapper::on_actionList_triggered(bool checked)
 
 void QEmailScrapper::on_actionCommas_triggered(bool checked)
 {
-    m_separator_one = ",";
+    if (checked == true) {
+        m_separator_one = ",";
+        ui->actionSemicolon->setChecked(false);
+    }
+    else {
+        m_separator_one = "";
+    }
     changeSeparation( m_separator_one, m_separator_two );
 }
 
 void QEmailScrapper::on_actionSemicolon_triggered(bool checked)
 {
-    m_separator_one = ";";
+    if (checked == true) {
+        m_separator_one = ";";
+        ui->actionCommas->setChecked(false);
+    }
+    else {
+        m_separator_one = "";
+    }
     changeSeparation( m_separator_one, m_separator_two );
 }
 
