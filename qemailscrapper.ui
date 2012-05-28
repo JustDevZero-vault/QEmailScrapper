@@ -89,7 +89,7 @@
     </property>
     <addaction name="actionScrap"/>
     <addaction name="separator"/>
-    <addaction name="action_Erase"/>
+    <addaction name="actionErase"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
@@ -110,24 +110,16 @@
     <property name="title">
      <string>&amp;Window</string>
     </property>
-    <widget class="QMenu" name="menuSplit">
-     <property name="title">
-      <string>Split</string>
-     </property>
-     <addaction name="actionVertical"/>
-     <addaction name="actionHorizontal"/>
-    </widget>
     <addaction name="actionFullScreen"/>
     <addaction name="actionShowTopToolbar"/>
     <addaction name="actionShowBottomToolbar"/>
     <addaction name="separator"/>
-    <addaction name="menuSplit"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
    <addaction name="menu_Tools"/>
-   <addaction name="menu_Help"/>
    <addaction name="menu_Window"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="mainToolBar">
@@ -148,7 +140,7 @@
    <addaction name="separator"/>
    <addaction name="actionScrap"/>
    <addaction name="separator"/>
-   <addaction name="action_Erase"/>
+   <addaction name="actionErase"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="font">
@@ -256,7 +248,7 @@
     <string>&amp;Scrap</string>
    </property>
   </action>
-  <action name="action_Erase">
+  <action name="actionErase">
    <property name="text">
     <string>&amp;Erase</string>
    </property>
@@ -348,28 +340,6 @@
    </property>
    <property name="text">
     <string>Show &amp;Bottom Toolbar</string>
-   </property>
-  </action>
-  <action name="actionVertical">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Vertical</string>
-   </property>
-   <property name="toolTip">
-    <string>Vertical</string>
-   </property>
-  </action>
-  <action name="actionHorizontal">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Horizontal</string>
    </property>
   </action>
  </widget>

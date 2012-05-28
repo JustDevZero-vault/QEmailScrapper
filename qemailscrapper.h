@@ -29,6 +29,8 @@
 #include <QStatusBar>
 #include <QToolBar>
 #include <QPlainTextEdit>
+#include <QFileDialog>
+#include <QFile>
 
 namespace Ui {
     class QEmailScrapper;
@@ -41,31 +43,59 @@ class QEmailScrapper : public QMainWindow
 public:
     explicit QEmailScrapper(QWidget *parent = 0);
         int active_plaintextedit;
+        QPlainTextEdit *g_text;
+        QStringList g_emailList;
+        QString g_separator;
+        QString g_filename;
     ~QEmailScrapper();
 
    private slots:
-        void on_actionFullScreen_triggered();
+
         void fullscreen();
-        void on_actionShowTopToolbar_triggered(bool checked);
-        void on_actionShowBottomToolbar_triggered(bool checked);
-        void on_actionVertical_triggered(bool checked);
-        void on_actionHorizontal_triggered(bool checked);
-        void on_actionCut_triggered();
-        void on_actionCopy_triggered();
-        void on_actionPaste_triggered();
-        void on_actionDelete_triggered();
-        void on_actionUndo_triggered();
-        void on_actionRedo_triggered();
         void activated_unscrapped();
         void activated_scrapped();
+        void openFile(const QString &filechosed);
+        void changeSeparation(const QString &separator);
+
+        void on_actionFullScreen_triggered();
+
+        void on_actionShowTopToolbar_triggered(bool checked);
+
+        void on_actionShowBottomToolbar_triggered(bool checked);
+
+        void on_actionCut_triggered();
+
+        void on_actionCopy_triggered();
+
+        void on_actionPaste_triggered();
+
+        void on_actionDelete_triggered();
+
+        void on_actionUndo_triggered();
+
+        void on_actionRedo_triggered();
+
+        void on_actionOpenFile_triggered();
+
+        void on_actionScrap_triggered();
+
+        void on_actionErase_triggered();
+
+        void on_actionSelectAll_triggered();
+
+        void on_actionSpaces_triggered();
+
+        void on_actionList_triggered();
+
+        void on_actionCommas_triggered();
+
+        void on_actionSemicolon_triggered();
 
     private:
         Ui::QEmailScrapper *ui;
 
         QAction *m_toolbar;
         QAction *m_bottombar;
-        QAction *m_vertical;
-        QAction *m_horizontal;
 
         QPlainTextEdit *m_unscrappedtext;
         QPlainTextEdit *m_scrappedtext;

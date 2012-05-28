@@ -35,11 +35,14 @@ QEmailScrapper::QEmailScrapper(QWidget *parent) :
 
     m_toolbar = ui->actionShowTopToolbar;
     m_bottombar = ui->actionShowBottomToolbar;
-    m_vertical = ui->actionVertical;
-    m_horizontal = ui->actionHorizontal;
 
     m_unscrappedtext = ui->mui_unscrapped_text;
     m_scrappedtext = ui->mui_scrapped_text;
+    active_plaintextedit = 0;
+    g_text = m_unscrappedtext;
+
+    g_filename = "";
+    g_separator = "\n";
 
     connect(m_unscrappedtext,SIGNAL(textChanged()),this,SLOT(activated_unscrapped()));
     connect(m_scrappedtext,SIGNAL(textChanged()),this,SLOT(activated_scrapped()));
@@ -54,8 +57,6 @@ QEmailScrapper::~QEmailScrapper()
 
     delete m_toolbar;
     delete m_bottombar;
-    delete m_vertical;
-    delete m_horizontal;
 }
 
 
@@ -102,116 +103,169 @@ void QEmailScrapper::on_actionShowBottomToolbar_triggered(bool checked)
 
 }
 
-void QEmailScrapper::on_actionVertical_triggered(bool checked)
+void QEmailScrapper::on_actionCut_triggered()
 {
-    if (checked == true)
-    {
-        m_horizontal->setChecked(false);
-        mui_statusbar->showMessage("View in vertical layout");
-    } else
-    {
-        m_horizontal->setChecked(true);
-        mui_statusbar->showMessage("View in horizontal layout");
-    } // end if
-}
-
-void QEmailScrapper::on_actionHorizontal_triggered(bool checked)
-{
-    if (checked == true)
-    {
-        m_vertical->setChecked(false);
-        mui_statusbar->showMessage("View in horizontal layout");
-    } else
-    {
-        m_vertical->setChecked(true);
-        mui_statusbar->showMessage("View in vertical layout");
-    } // end if
-}
-
-
-void QEmailScrapper::on_actionCut_triggered() {
-
-    if (m_unscrappedtext) {
-        m_unscrappedtext->cut();
-    }
-    if (m_scrappedtext) {
+    if (g_text) {
         m_scrappedtext->cut();
-    }
+    } // end if
 }
 
 void QEmailScrapper::on_actionCopy_triggered()
 {
-    if (m_unscrappedtext) {
-        m_unscrappedtext->copy();
-    }
-    if (m_scrappedtext) {
+    if (g_text) {
         m_scrappedtext->copy();
-    }
+    } // end if
 }
 
 void QEmailScrapper::on_actionPaste_triggered()
 {
-    if (m_unscrappedtext) {
-        m_unscrappedtext->paste();
-    }
-    if (m_scrappedtext) {
+    if (g_text) {
         m_scrappedtext->paste();
-    }
+    } // end if
 }
 
 void QEmailScrapper::on_actionDelete_triggered()
 {
-    /*QPlainTextEdit* p_text = dynamic_cast<QTextEdit*>(mui_tabs->currentWidget());
-    if (p_text)
-    {
-         // it was a text, perform delete
-        p_text->textCursor().removeSelectedText();
-    } // end if*/
-
-    if (m_unscrappedtext) {
-        m_unscrappedtext->textCursor().removeSelectedText();
-    }
-    if (m_scrappedtext) {
-        m_scrappedtext->textCursor().removeSelectedText();
-    }
+    if (g_text) {
+        g_text->textCursor().removeSelectedText();
+    } // end if
 }
+
+
 
 void QEmailScrapper::on_actionUndo_triggered()
 {
-    QPlainTextEdit *p_text;
-
-    if (active_plaintextedit == 0) {
-        p_text = m_unscrappedtext;
-    }
-    else if (active_plaintextedit == 1) {
-        p_text = m_scrappedtext;
-    }
-    if (p_text)
+    if (g_text)
     {
-        p_text->undo();
-    } // end if*/
+        g_text->undo();
+    } // end if
 }
 
 void QEmailScrapper::on_actionRedo_triggered()
 {
-    QPlainTextEdit *p_text;
-
-    if (active_plaintextedit == 0) {
-        p_text = m_unscrappedtext;
-    }
-    else if (active_plaintextedit == 1) {
-        p_text = m_scrappedtext;
-    }
-    if (p_text)
+    if (g_text)
     {
-        p_text->redo();
-    } // end if*/
+        g_text->redo();
+    } // end if
+}
+
+void QEmailScrapper::on_actionOpenFile_triggered()
+{
+    /// Open file dialog
+    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "Supported files (*.txt *.sql *.md *.sqlite *.pro *.ui *.cpp *.h *.cxx *.hxx *.hpp *.user *.conf *.po *.pot *.js *.html *.html *.css *.py *.java *.class *.rb)");
+    openFile(fileName);
+}
+
+void QEmailScrapper::openFile(const QString &filechosed)
+{
+    /// Open desired file
+    QFile textfile( filechosed );
+    if (textfile.open(QIODevice::ReadOnly))
+    {
+        // Declare pointers and variables
+        QTextStream text_stream(&textfile);
+        QFileInfo file_info(textfile);
+
+        m_unscrappedtext->clear();
+        m_unscrappedtext->appendPlainText(text_stream.readAll());
+
+    } // end if
+    textfile.close();
 }
 
 void QEmailScrapper::activated_unscrapped() {
     active_plaintextedit = 0;
+    g_text = m_unscrappedtext;
 }
 
 void QEmailScrapper::activated_scrapped() {
     active_plaintextedit = 1;
+    g_text = m_scrappedtext;
+}
+
+void QEmailScrapper::on_actionScrap_triggered()
+{
+    QString contentUncrapped = m_unscrappedtext->toPlainText();
+
+
+    QRegExp rx("([-a-zA-Z0-9._]+@[-a-zA-Z0-9_]+.[a-zA-Z0-9_.]+)");
+    QString contentScrapped = "";
+    int position = 0;
+
+    while ((position = rx.indexIn(contentUncrapped, position)) != -1) {
+        g_emailList << rx.cap(1);
+        position += rx.matchedLength();
+    } // end while
+    g_emailList.removeDuplicates();
+
+    if ( !g_emailList.isEmpty() ) {
+        for (QStringList::iterator it = g_emailList.begin(); it != g_emailList.end(); ++it) {
+            QString iter = *it;
+            contentScrapped += QString(iter+g_separator);
+        } // end for
+    } // end if
+
+    m_scrappedtext->clear();
+
+    m_scrappedtext->appendPlainText(contentScrapped.trimmed());
+    mui_statusbar->showMessage("Scrap done");
+}
+
+void QEmailScrapper::on_actionErase_triggered()
+{
+    m_scrappedtext->clear();
+    mui_statusbar->showMessage("Erased scrapped text");
+}
+
+void QEmailScrapper::on_actionSelectAll_triggered()
+{
+    g_text->selectAll();
+    mui_statusbar->showMessage("All selected");
+}
+
+void QEmailScrapper::on_actionSpaces_triggered()
+{
+    g_separator = " ";
+    changeSeparation( g_separator );
+}
+
+void QEmailScrapper::on_actionList_triggered()
+{
+    g_separator = "\n";
+    changeSeparation( g_separator );
+}
+
+
+void QEmailScrapper::on_actionCommas_triggered()
+{
+    g_separator = ", ";
+    changeSeparation( g_separator );
+}
+
+void QEmailScrapper::on_actionSemicolon_triggered()
+{
+    g_separator = ";";
+    changeSeparation( g_separator );
+}
+
+void QEmailScrapper::changeSeparation(const QString &separator )
+{
+    QString contentScrapped = "";
+    int iterador = 0;
+    if ( !g_emailList.isEmpty() ) {
+        for (QStringList::iterator it = g_emailList.begin(); it != g_emailList.end(); ++it) {
+            iterador +=1;
+            QString iteritem = *it;
+            if ( iterador == g_emailList.count() ) {
+                contentScrapped += QString(iteritem);
+            }
+            else {
+                contentScrapped += QString(iteritem + separator);
+
+            }
+        } // end for
+    } // end if
+
+    m_scrappedtext->clear();
+    m_scrappedtext->appendPlainText(contentScrapped.trimmed());
 }
