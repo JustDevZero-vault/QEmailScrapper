@@ -39,8 +39,8 @@ public:
     explicit AboutQEmailScrapper(QWidget *parent = 0);
     ~AboutQEmailScrapper();
 
-    private slots:
-        void on_closeButton_clicked();
+    /*private slots:
+        void on_closeButton_clicked();*/
 
     private:
     Ui::AboutQEmailScrapper *ui;
