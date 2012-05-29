@@ -39,7 +39,7 @@ QEmailScrapper::QEmailScrapper(QWidget *parent) :
 
     m_unscrappedtext = ui->mui_unscrapped_text;
     m_scrappedtext = ui->mui_scrapped_text;
-    active_plaintextedit = 0;
+    __active = 0;
     g_text = m_unscrappedtext;
 
     g_filename = "";
@@ -195,12 +195,12 @@ void QEmailScrapper::openFile(const QString &filechosed)
 }
 
 void QEmailScrapper::activated_unscrapped() {
-    active_plaintextedit = 0;
+    __active = 0;
     g_text = m_unscrappedtext;
 }
 
 void QEmailScrapper::activated_scrapped() {
-    active_plaintextedit = 1;
+    __active = 1;
     g_text = m_scrappedtext;
 }
 
@@ -346,7 +346,7 @@ void QEmailScrapper::on_actionPrint_triggered()
     if (dialog->exec() == QDialog::Accepted)
     {
         m_scrappedtext->print(&printer);
-    }
+    } // end if
 }
 
 void QEmailScrapper::on_actionAboutQEmailScrapper_triggered()
@@ -360,11 +360,42 @@ void QEmailScrapper::on_actionSave_triggered()
 {
     QFileInfo filename(g_filename);
     QString finalname = filename.absolutePath() + QDir::separator() + filename.baseName() + ".scrapped.txt";
-    QFile file(finalname);
+    QString contentfile = m_scrappedtext->toPlainText() + "\n";
+    if ( !finalname.isNull()) {
+        saveFile(finalname,contentfile);
+    }
+
+}
+
+void QEmailScrapper::on_actionSaveScrappedFileAs_triggered()
+{
+    QString contentfile = m_scrappedtext->toPlainText() + "\n";
+    QString filenamestring = QFileDialog::getSaveFileName(
+                                 this,
+                                 "Save file",
+                                 mlGetHome(),
+                                 "Text file (*.txt)");
+    if( !filenamestring.isNull() )
+    {
+
+        QFileInfo filename(filenamestring);
+        QString finalname = filename.absoluteFilePath();
+        saveFile(finalname,contentfile);
+    }
+}
+
+void QEmailScrapper::saveFile(const QString &desiredfile, QString &desiredcontent)
+{
+    QString chosedfile = desiredfile;
+    QString chosedcontent = desiredcontent;
+    QFile file(chosedfile);
     if ( file.open(QIODevice::WriteOnly | QIODevice::Text ))
     {
-        QTextStream stream( &finalname );
-        stream << m_scrappedtext->toPlainText();
-        stream.
+        QTextStream stream( &chosedfile );
+        file.write(chosedcontent.toAscii());
+        file.close();
+    }
+    else {
+        mlMsgError("The file can't be saved");
     } // end if
 }

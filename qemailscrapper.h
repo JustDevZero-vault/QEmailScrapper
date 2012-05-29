@@ -35,6 +35,7 @@
 #include <QPageSetupDialog>
 #include <QPrinter>
 
+
 namespace Ui {
     class QEmailScrapper;
 }
@@ -45,7 +46,6 @@ class QEmailScrapper : public QMainWindow
 
 public:
     explicit QEmailScrapper(QWidget *parent = 0);
-        int active_plaintextedit;
         QPlainTextEdit *g_text;
         QStringList g_emailList;
         QString g_filename;
@@ -61,6 +61,7 @@ public:
         void openFile(const QString &filechosed);
         void changeSeparation(const QString &separator_one, const QString &separator_two);
         void setFontSize(const int &points);
+        void saveFile(const QString &desiredfile, QString &desiredcontent);
 
         void on_actionFullScreen_triggered();
 
@@ -108,6 +109,8 @@ public:
 
         void on_actionSave_triggered();
 
+        void on_actionSaveScrappedFileAs_triggered();
+
     private:
         Ui::QEmailScrapper *ui;
 
@@ -117,6 +120,7 @@ public:
         QPlainTextEdit *m_unscrappedtext;
         QPlainTextEdit *m_scrappedtext;
         int __minfontsize;
+        int __active;
         QString m_separator_one;
         QString m_separator_two;
 

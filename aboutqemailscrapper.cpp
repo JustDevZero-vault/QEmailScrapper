@@ -30,9 +30,9 @@ AboutQEmailScrapper::AboutQEmailScrapper(QWidget *parent) :
     ui(new Ui::AboutQEmailScrapper)
 {
     ui->setupUi(this);
-    ui->mui_textedit->viewport()->setAutoFillBackground(false);
-    ui->mui_textedit->setFrameShape(QTextEdit::NoFrame);
-    ui->mui_textedit->setFrameShadow(QTextEdit::Plain);
+    ui->mui_texbrowser->viewport()->setAutoFillBackground(false);
+    ui->mui_texbrowser->setFrameShape(QTextEdit::NoFrame);
+    ui->mui_texbrowser->setFrameShadow(QTextEdit::Plain);
 }
 
 AboutQEmailScrapper::~AboutQEmailScrapper()

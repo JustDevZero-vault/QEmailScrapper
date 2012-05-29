@@ -48,6 +48,7 @@ void ML_EXPORT mlMsgError ( QString cad, QWidget *parent = 0 );
 void ML_EXPORT mlWebBrowser(const QString &uri, const QString &defbrowser="");
 
 QString ML_EXPORT mlGetEnv( const char *varName );
+QString ML_EXPORT mlGetHome();
 
 #ifdef Q_OS_WIN32
 wchar_t* ML_EXPORT MlQStringToWCHAR (QString inString);

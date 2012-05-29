@@ -125,6 +125,14 @@ QString mlGetEnv( const char *varName ) {
 #endif // Q_OS_WIN32
 }
 
+QString mlGetHome()
+{
+#ifdef Q_OS_WIN32
+    return mlGetEnv("USERPROFILE");
+#else
+    return mlGetEnv("HOME");
+#endif // Q_OS_WIN32
+}
 
 bool mlCopyFile( const QString &oldName, const QString &newName )
 {
