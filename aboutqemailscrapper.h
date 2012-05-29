@@ -1,7 +1,9 @@
 /*
- * template.cpp
- * Translatorman: Utility for translating or just writing, manpages into other languages.
+ * aboutqemailscrapper.h
+ * QEmailScrapper: Utility for scrapping a file in search of emails
  * Copyright (C) 2012  Daniel Ripoll <info@danielripoll.es>
+ * http://danielripoll.es
+ *
 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +17,8 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
-
-/* 
-\ This is a template.cpp file
-*/
 
 #ifndef ABOUTQEMAILSCRAPPER_H
 #define ABOUTQEMAILSCRAPPER_H
@@ -38,9 +36,6 @@ class AboutQEmailScrapper : public QDialog
 public:
     explicit AboutQEmailScrapper(QWidget *parent = 0);
     ~AboutQEmailScrapper();
-
-    /*private slots:
-        void on_closeButton_clicked();*/
 
     private:
     Ui::AboutQEmailScrapper *ui;
