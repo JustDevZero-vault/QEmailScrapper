@@ -40,7 +40,7 @@ AboutQEmailScrapper::~AboutQEmailScrapper()
     delete ui;
 }
 
-void AboutQEmailScrapper::on_pushButton_clicked()
+void AboutQEmailScrapper::on_closeButton_clicked()
 {
     this->close();
 }
