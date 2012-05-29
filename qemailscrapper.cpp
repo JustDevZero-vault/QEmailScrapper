@@ -23,6 +23,7 @@
 #include "qemailscrapper.h"
 #include "src/mlfunctions.h"
 #include "ui_qemailscrapper.h"
+#include "aboutqemailscrapper.h"
 
 QEmailScrapper::QEmailScrapper(QWidget *parent) :
     QMainWindow(parent),
@@ -49,6 +50,8 @@ QEmailScrapper::QEmailScrapper(QWidget *parent) :
 
     __minfontsize=1;
     setFontSize(11);
+
+
 
 
     connect(m_unscrappedtext,SIGNAL(textChanged()),this,SLOT(activated_unscrapped()));
@@ -170,6 +173,7 @@ void QEmailScrapper::on_actionOpenFile_triggered()
 {
     /// Open file dialog
     QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "Supported files (*.txt *.sql *.md *.sqlite *.pro *.ui *.cpp *.h *.cxx *.hxx *.hpp *.user *.conf *.po *.pot *.js *.html *.html *.css *.py *.java *.class *.rb)");
+    g_filename = fileName;
     openFile(fileName);
 }
 
@@ -333,4 +337,34 @@ void QEmailScrapper::on_actionZoomOut_triggered()
 void QEmailScrapper::on_actionZoomReset_triggered()
 {
     setFontSize(11);
+}
+
+void QEmailScrapper::on_actionPrint_triggered()
+{
+    QPrinter printer;
+    QPrintDialog* dialog = new QPrintDialog(&printer, this);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        m_scrappedtext->print(&printer);
+    }
+}
+
+void QEmailScrapper::on_actionAboutQEmailScrapper_triggered()
+{
+    AboutQEmailScrapper about;
+    about.exec();
+    about.show();
+}
+
+void QEmailScrapper::on_actionSave_triggered()
+{
+    QFileInfo filename(g_filename);
+    QString finalname = filename.absolutePath() + QDir::separator() + filename.baseName() + ".scrapped.txt";
+    QFile file(finalname);
+    if ( file.open(QIODevice::WriteOnly | QIODevice::Text ))
+    {
+        QTextStream stream( &finalname );
+        stream << m_scrappedtext->toPlainText();
+        stream.
+    } // end if
 }

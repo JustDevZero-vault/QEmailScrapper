@@ -81,7 +81,7 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionContents"/>
-    <addaction name="actionAbout_QEmailScrapper"/>
+    <addaction name="actionAboutQEmailScrapper"/>
    </widget>
    <widget class="QMenu" name="menu_Tools">
     <property name="title">
@@ -285,7 +285,7 @@
     <string>Contents</string>
    </property>
   </action>
-  <action name="actionAbout_QEmailScrapper">
+  <action name="actionAboutQEmailScrapper">
    <property name="text">
     <string>About QEmailScrapper</string>
    </property>

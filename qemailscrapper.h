@@ -31,6 +31,9 @@
 #include <QPlainTextEdit>
 #include <QFileDialog>
 #include <QFile>
+#include <QPrintDialog>
+#include <QPageSetupDialog>
+#include <QPrinter>
 
 namespace Ui {
     class QEmailScrapper;
@@ -98,6 +101,12 @@ public:
         void on_actionZoomOut_triggered();
 
         void on_actionZoomReset_triggered();
+
+        void on_actionPrint_triggered();
+
+        void on_actionAboutQEmailScrapper_triggered();
+
+        void on_actionSave_triggered();
 
     private:
         Ui::QEmailScrapper *ui;

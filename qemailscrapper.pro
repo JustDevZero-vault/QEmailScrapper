@@ -13,11 +13,19 @@ TEMPLATE = app
 SOURCES += main.cxx\
         qemailscrapper.cpp\
         src/mlfunctions.cpp\
-        src/mlapplication.cpp
+        src/mlapplication.cpp \
+    aboutqemailscrapper.cpp
 
 HEADERS  += qemailscrapper.h\
             src/mlfunctions.h\
             src/mlapplication.h\
-            src/mldefs.h
+            src/mldefs.h \
+    aboutqemailscrapper.h
 
-FORMS    += qemailscrapper.ui
+FORMS    += qemailscrapper.ui \
+    aboutqemailscrapper.ui
+
+
+
+
+
