@@ -49,6 +49,8 @@ void ML_EXPORT mlWebBrowser(const QString &uri, const QString &defbrowser="");
 
 QString ML_EXPORT mlGetEnv( const char *varName );
 QString ML_EXPORT mlGetHome();
+QString ML_EXPORT mlGetArch();
+QString ML_EXPORT mlGetVersion();
 
 #ifdef Q_OS_WIN32
 wchar_t* ML_EXPORT MlQStringToWCHAR (QString inString);

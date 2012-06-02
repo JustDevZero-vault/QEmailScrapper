@@ -23,14 +23,27 @@
 #include "aboutqemailscrapper.h"
 #include "ui_aboutqemailscrapper.h"
 
+
 AboutQEmailScrapper::AboutQEmailScrapper(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutQEmailScrapper)
 {
     ui->setupUi(this);
     ui->mui_texbrowser->viewport()->setAutoFillBackground(false);
-    ui->mui_texbrowser->setFrameShape(QTextEdit::NoFrame);
-    ui->mui_texbrowser->setFrameShadow(QTextEdit::Plain);
+    ui->mui_texbrowser->setFrameShape(QTextBrowser::NoFrame);
+    ui->mui_texbrowser->setFrameShadow(QTextBrowser::Plain);
+    ui->mui_logo->viewport()->setAutoFillBackground(false);
+    ui->mui_logo->setFrameShape(QTextBrowser::NoFrame);
+    ui->mui_logo->setFrameShadow(QTextBrowser::Plain);
+
+    QString qtversion_string = ui->mui_version->text();
+    qtversion_string.replace("__QTVERSION__",QT_VERSION_STR);
+    qtversion_string.replace("__ARCH__",mlGetArch());
+    ui->mui_version->setText(qtversion_string);mlGetVersion;
+
+    QString version_string = ui->mui_title->text();
+    version_string.replace("__VERSION__",mlGetVersion());
+    ui->mui_title->setText(version_string);
 }
 
 AboutQEmailScrapper::~AboutQEmailScrapper()

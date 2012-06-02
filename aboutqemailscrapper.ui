@@ -35,7 +35,7 @@
    <item row="0" column="0" colspan="2">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QTextBrowser" name="textBrowser">
+      <widget class="QTextBrowser" name="mui_logo">
        <property name="documentTitle">
         <string notr="true"/>
        </property>
@@ -62,12 +62,12 @@ p, li { white-space: pre-wrap; }
           </font>
          </property>
          <property name="text">
-          <string notr="true">0.1</string>
+          <string notr="true">Based on QT __QTVERSION__ (__ARCH__ Bit)</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="mui_title">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -75,7 +75,7 @@ p, li { white-space: pre-wrap; }
           </font>
          </property>
          <property name="text">
-          <string>QEmailScrapper</string>
+          <string>QEmailScrapper  __VERSION__</string>
          </property>
         </widget>
        </item>

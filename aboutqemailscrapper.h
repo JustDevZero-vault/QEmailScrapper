@@ -24,6 +24,8 @@
 #define ABOUTQEMAILSCRAPPER_H
 
 #include <QDialog>
+#include "src/mlfunctions.h"
+
 
 namespace Ui {
     class AboutQEmailScrapper;

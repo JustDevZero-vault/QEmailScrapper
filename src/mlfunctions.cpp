@@ -21,7 +21,6 @@
 
 #include "mlfunctions.h"
 
-
 void mlMsgInfo ( QString cad, QWidget *parent )
 {
     /// Information Message
@@ -132,6 +131,33 @@ QString mlGetHome()
 #else
     return mlGetEnv("HOME");
 #endif // Q_OS_WIN32
+}
+
+QString mlGetArch()
+{
+    // Check windows
+    #if _WIN32 || _WIN64
+    #if _WIN64
+    #define ENVIRONMENT QString("64")
+    #else
+    #define ENVIRONMENT QString("32")
+    #endif
+    #endif
+
+    // Check GCC
+    #if __GNUC__
+    #if __x86_64__ || __ppc64__
+    #define ENVIRONMENT QString("64")
+    #else
+    #define ENVIRONMENT QString("32")
+    #endif
+    #endif
+    return ENVIRONMENT;
+}
+
+QString mlGetVersion()
+{
+    return "0.1";
 }
 
 bool mlCopyFile( const QString &oldName, const QString &newName )

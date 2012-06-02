@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 
     // Free memory
 
-    delete memail;
+    //delete memail;
     delete g_theApp;
 
     return valorSalida;
