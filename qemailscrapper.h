@@ -111,6 +111,10 @@ public:
 
         void on_actionSaveScrappedFileAs_triggered();
 
+        void on_actionGotoBlockStart_triggered();
+
+        void on_actionGotoBlockEnd_triggered();
+
     private:
         Ui::QEmailScrapper *ui;
 

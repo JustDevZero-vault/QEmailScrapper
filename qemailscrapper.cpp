@@ -399,3 +399,13 @@ void QEmailScrapper::saveFile(const QString &desiredfile, QString &desiredconten
         mlMsgError("The file can't be saved");
     } // end if
 }
+
+void QEmailScrapper::on_actionGotoBlockStart_triggered()
+{
+    g_text->moveCursor(QTextCursor::Start);
+}
+
+void QEmailScrapper::on_actionGotoBlockEnd_triggered()
+{
+    g_text->moveCursor(QTextCursor::End);
+}
