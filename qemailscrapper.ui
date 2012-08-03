@@ -279,11 +279,6 @@
     <string>Semicolon</string>
    </property>
   </action>
-  <action name="actionContents">
-   <property name="text">
-    <string>Contents</string>
-   </property>
-  </action>
   <action name="actionAboutQEmailScrapper">
    <property name="text">
     <string>About QEmailScrapper</string>
