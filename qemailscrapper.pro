@@ -25,6 +25,9 @@ HEADERS  += qemailscrapper.h\
 FORMS    += qemailscrapper.ui \
     aboutqemailscrapper.ui
 
+RESOURCES += \
+    resources.qrc
+
 
 
 
