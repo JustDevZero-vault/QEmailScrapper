@@ -126,21 +126,21 @@ void QEmailScrapper::on_actionShowBottomToolbar_triggered(bool checked)
 void QEmailScrapper::on_actionCut_triggered()
 {
     if (g_text) {
-        m_scrappedtext->cut();
+        g_text->cut();
     } // end if
 }
 
 void QEmailScrapper::on_actionCopy_triggered()
 {
     if (g_text) {
-        m_scrappedtext->copy();
+        g_text->copy();
     } // end if
 }
 
 void QEmailScrapper::on_actionPaste_triggered()
 {
     if (g_text) {
-        m_scrappedtext->paste();
+        g_text->paste();
     } // end if
 }
 

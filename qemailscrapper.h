@@ -115,6 +115,7 @@ public:
 
         void on_actionGotoBlockEnd_triggered();
 
+
     private:
         Ui::QEmailScrapper *ui;
 
