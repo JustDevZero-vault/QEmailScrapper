@@ -194,6 +194,10 @@
    <addaction name="actionList"/>
   </widget>
   <action name="actionOpenFile">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/open</normaloff>:/actions/open</iconset>
+   </property>
    <property name="text">
     <string>&amp;Open File...</string>
    </property>
@@ -202,6 +206,10 @@
    </property>
   </action>
   <action name="actionCloseFile">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/cancel</normaloff>:/actions/cancel</iconset>
+   </property>
    <property name="text">
     <string>&amp;Close File</string>
    </property>
@@ -215,6 +223,10 @@
    </property>
   </action>
   <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/print</normaloff>:/actions/print</iconset>
+   </property>
    <property name="text">
     <string>&amp;Print...</string>
    </property>
@@ -228,6 +240,10 @@
    </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/save</normaloff>:/actions/save</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -285,6 +301,10 @@
    </property>
   </action>
   <action name="actionScrap">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/scrap</normaloff>:/actions/scrap</iconset>
+   </property>
    <property name="text">
     <string>&amp;Scrap</string>
    </property>
@@ -293,6 +313,10 @@
    </property>
   </action>
   <action name="actionErase">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/erase</normaloff>:/actions/erase</iconset>
+   </property>
    <property name="text">
     <string>&amp;Erase</string>
    </property>
@@ -301,6 +325,10 @@
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/undo</normaloff>:/actions/undo</iconset>
+   </property>
    <property name="text">
     <string>&amp;Undo</string>
    </property>
@@ -309,17 +337,25 @@
    </property>
   </action>
   <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/redo</normaloff>:/actions/redo</iconset>
+   </property>
    <property name="text">
-    <string>Redo</string>
+    <string>&amp;Redo</string>
    </property>
    <property name="toolTip">
-    <string>&amp;Redo</string>
+    <string>Redo</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Y</string>
    </property>
   </action>
   <action name="actionCut">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/cut</normaloff>:/actions/cut</iconset>
+   </property>
    <property name="text">
     <string>Cu&amp;t</string>
    </property>
@@ -328,6 +364,10 @@
    </property>
   </action>
   <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/copy</normaloff>:/actions/copy</iconset>
+   </property>
    <property name="text">
     <string>&amp;Copy</string>
    </property>
@@ -336,6 +376,10 @@
    </property>
   </action>
   <action name="actionPaste">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/paste</normaloff>:/actions/paste</iconset>
+   </property>
    <property name="text">
     <string>&amp;Paste</string>
    </property>
@@ -431,7 +475,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>

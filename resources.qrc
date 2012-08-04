@@ -1,5 +1,19 @@
 <RCC>
-    <qresource prefix="/">
-        <file>images/logo.png</file>
+    <qresource prefix="/logo">
+        <file alias="mainlogo">images/logo.png</file>
+    </qresource>
+    <qresource prefix="/actions">
+        <file alias="cancel">images/48px/Crystal_Clear_action_button_cancel.png</file>
+        <file alias="copy">images/48px/Crystal_Clear_action_editcopy.png</file>
+        <file alias="cut">images/48px/Crystal_Clear_action_editcut.png</file>
+        <file alias="paste">images/48px/Crystal_Clear_action_editpaste.png</file>
+        <file alias="find">images/48px/Crystal_Clear_action_filefind.png</file>
+        <file alias="print">images/48px/Crystal_Clear_action_fileprint.png</file>
+        <file alias="redo">images/48px/Crystal_Clear_redo.png</file>
+        <file alias="undo">images/48px/Crystal_Clear_undo.png</file>
+        <file alias="scrap">images/48px/Crystal_Project_kghostview.png</file>
+        <file alias="save">images/48px/Crystal_Project_3floppy_unmount.png</file>
+        <file alias="open">images/48px/Crystal_Project_file_doc.png</file>
+        <file alias="erase">images/48px/Crystal_Clear_action_filenew.png</file>
     </qresource>
 </RCC>
