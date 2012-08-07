@@ -39,7 +39,11 @@ QEmailScrapper::QEmailScrapper(QWidget *parent) :
 
     m_unscrappedtext = ui->mui_unscrapped_text;
     m_scrappedtext = ui->mui_scrapped_text;
+
     __active = 0;
+    __edited = 0;
+
+
     g_text = m_unscrappedtext;
 
     g_filename = "";
@@ -253,7 +257,7 @@ void QEmailScrapper::on_actionSpaces_triggered(bool checked)
     else {
         m_separator_two = "\n";
         ui->actionList->setChecked(true);
-    }
+    } // end if
     changeSeparation( m_separator_one, m_separator_two );
 }
 
@@ -266,7 +270,7 @@ void QEmailScrapper::on_actionList_triggered(bool checked)
     else {
         m_separator_two = " ";
         ui->actionSpaces->setChecked(true);
-    }
+    } // end if
     changeSeparation( m_separator_one, m_separator_two );
 
 }
@@ -280,7 +284,7 @@ void QEmailScrapper::on_actionCommas_triggered(bool checked)
     }
     else {
         m_separator_one = "";
-    }
+    } // end if
     changeSeparation( m_separator_one, m_separator_two );
 }
 
@@ -292,7 +296,7 @@ void QEmailScrapper::on_actionSemicolon_triggered(bool checked)
     }
     else {
         m_separator_one = "";
-    }
+    } // end if
     changeSeparation( m_separator_one, m_separator_two );
 }
 
@@ -312,7 +316,7 @@ void QEmailScrapper::changeSeparation(const QString &separator_one, const QStrin
             else {
                 contentScrapped += QString(iteritem + m_separator_one + m_separator_two);
 
-            }
+            } // end if
         } // end for
     } // end if
 
@@ -331,7 +335,7 @@ void QEmailScrapper::on_actionZoomOut_triggered()
     if (g_fontsize != __minfontsize)
     {
         g_fontsize-=1;
-    }
+    } // end if
     setFontSize(g_fontsize);
 }
 
@@ -366,7 +370,7 @@ void QEmailScrapper::on_actionSave_triggered()
         if ( !finalname.isNull()) {
             g_finalname = finalname;;
         }
-    }
+    } // end if
     saveFile(g_finalname, contentfile);
 
 }
@@ -374,6 +378,29 @@ void QEmailScrapper::on_actionSave_triggered()
 void QEmailScrapper::on_actionSaveScrappedFileAs_triggered()
 {
     QString contentfile = m_scrappedtext->toPlainText() + "\n";
+    saveFileDialog(contentfile);
+}
+
+void QEmailScrapper::saveFile(const QString &desiredfile, QString &desiredcontent)
+{
+    QString chosedfile = desiredfile;
+    QString chosedcontent = desiredcontent;
+    QFile file(chosedfile);
+
+    if ( file.open(QIODevice::WriteOnly | QIODevice::Text ))
+    {
+        QTextStream stream( &chosedfile );
+        file.write(chosedcontent.toAscii());
+        file.close();
+        __edited = 0;
+    }
+    else {
+        mlMsgError("The file can't be saved");
+    } // end if
+}
+
+void QEmailScrapper::saveFileDialog(const QString &content ) {
+    QString contentfile = content;
     QString filenamestring = QFileDialog::getSaveFileName(
                                  this,
                                  "Save file",
@@ -386,28 +413,10 @@ void QEmailScrapper::on_actionSaveScrappedFileAs_triggered()
         QString finalname = filename.absoluteFilePath();
         g_finalname = finalname;
         saveFile(finalname,contentfile);
-    }
-}
-
-void QEmailScrapper::saveFile(const QString &desiredfile, QString &desiredcontent)
-{
-    QString chosedfile = desiredfile;
-
-
-    QString chosedcontent = desiredcontent;
-    QFile file(chosedfile);
-    if ( file.open(QIODevice::WriteOnly | QIODevice::Text ))
-    {
-        QTextStream stream( &chosedfile );
-        file.write(chosedcontent.toAscii());
-        file.close();
-    }
-    else {
-        mlMsgError("The file can't be saved");
     } // end if
 }
 
-void QEmailScrapper::sureQuit()
+int QEmailScrapper::sureQuit()
 {
     QMessageBox msgBox;
     msgBox.addButton(QMessageBox::Yes);
@@ -415,33 +424,23 @@ void QEmailScrapper::sureQuit()
     msgBox.setText("Are you sure you want to quit without saving data?");
     msgBox.setWindowTitle("Are you sure?");
     int selection = msgBox.exec();
-    QString contentfile = m_scrappedtext->toPlainText() + "\n";
+    int selecValue = 1;
     if(selection == QMessageBox::Yes)
     {
-        m_scrappedtext->clear();
-        m_unscrappedtext->clear();
+        selecValue = 1;
     }
     else if(selection == QMessageBox::No)
     {
+        QString contentfile = m_scrappedtext->toPlainText() + "\n";
         if ( g_finalname.isEmpty() ) {
-            QString filenamestring = QFileDialog::getSaveFileName(
-                                         this,
-                                         "Save file",
-                                         mlGetHome(),
-                                         "Text file (*.txt)");
-            if( !filenamestring.isNull() )
-            {
-
-                QFileInfo filename(filenamestring);
-                QString finalname = filename.absoluteFilePath();
-                g_finalname = finalname;
-                saveFile(finalname,contentfile);
-            } // end if
+            saveFileDialog(contentfile);
         }
         else {
             saveFile(g_finalname, contentfile);
         } // end if
+        selecValue = 0;
     } // end if
+    return selecValue;
 }
 
 void QEmailScrapper::on_actionGotoBlockStart_triggered()
@@ -456,5 +455,27 @@ void QEmailScrapper::on_actionGotoBlockEnd_triggered()
 
 void QEmailScrapper::on_actionCloseFile_triggered()
 {
-    sureQuit();
+    if (__edited == 1)
+    {
+        int toclose = sureQuit();
+        if ( toclose == 1)
+        {
+            m_scrappedtext->clear();
+            m_unscrappedtext->clear();
+        } // end if
+    } // end if
+}
+
+void QEmailScrapper::on_actionExit_triggered()
+{
+    if (__edited == 1)
+    {
+        sureQuit();
+    } // end if
+    close();
+}
+
+void QEmailScrapper::on_mui_scrapped_text_textChanged()
+{
+    __edited = 1;
 }

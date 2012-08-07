@@ -45,16 +45,16 @@ class QEmailScrapper : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit QEmailScrapper(QWidget *parent = 0);
+        explicit QEmailScrapper(QWidget *parent = 0);
         QPlainTextEdit *g_text;
         QStringList g_emailList;
         QString g_filename;
         QString g_finalname;
         QFont g_font;
         int g_fontsize;
-    ~QEmailScrapper();
+        ~QEmailScrapper();
 
-   private slots:
+    private slots:
 
         void fullscreen();
         void activated_unscrapped();
@@ -63,7 +63,8 @@ public:
         void changeSeparation(const QString &separator_one, const QString &separator_two);
         void setFontSize(const int &points);
         void saveFile(const QString &desiredfile, QString &desiredcontent);
-        void sureQuit();
+        void saveFileDialog(const QString &content );
+        int sureQuit();
 
         void on_actionFullScreen_triggered();
 
@@ -120,6 +121,10 @@ public:
 
         void on_actionCloseFile_triggered();
 
+        void on_actionExit_triggered();
+
+        void on_mui_scrapped_text_textChanged();
+
     private:
         Ui::QEmailScrapper *ui;
 
@@ -130,6 +135,7 @@ public:
         QPlainTextEdit *m_scrappedtext;
         int __minfontsize;
         int __active;
+        int __edited;
         QString m_separator_one;
         QString m_separator_two;
 
