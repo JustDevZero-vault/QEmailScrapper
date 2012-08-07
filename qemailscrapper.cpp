@@ -43,6 +43,7 @@ QEmailScrapper::QEmailScrapper(QWidget *parent) :
     g_text = m_unscrappedtext;
 
     g_filename = "";
+    g_finalname = "";
 
     m_separator_one = "";
     m_separator_two = "\n";
@@ -361,9 +362,12 @@ void QEmailScrapper::on_actionSave_triggered()
     QFileInfo filename(g_filename);
     QString finalname = filename.absolutePath() + QDir::separator() + filename.baseName() + ".scrapped.txt";
     QString contentfile = m_scrappedtext->toPlainText() + "\n";
-    if ( !finalname.isNull()) {
-        saveFile(finalname,contentfile);
+    if ( g_finalname.isEmpty() ) {
+        if ( !finalname.isNull()) {
+            g_finalname = finalname;;
+        }
     }
+    saveFile(g_finalname, contentfile);
 
 }
 
@@ -380,6 +384,7 @@ void QEmailScrapper::on_actionSaveScrappedFileAs_triggered()
 
         QFileInfo filename(filenamestring);
         QString finalname = filename.absoluteFilePath();
+        g_finalname = finalname;
         saveFile(finalname,contentfile);
     }
 }
@@ -387,6 +392,8 @@ void QEmailScrapper::on_actionSaveScrappedFileAs_triggered()
 void QEmailScrapper::saveFile(const QString &desiredfile, QString &desiredcontent)
 {
     QString chosedfile = desiredfile;
+
+
     QString chosedcontent = desiredcontent;
     QFile file(chosedfile);
     if ( file.open(QIODevice::WriteOnly | QIODevice::Text ))
@@ -400,6 +407,43 @@ void QEmailScrapper::saveFile(const QString &desiredfile, QString &desiredconten
     } // end if
 }
 
+void QEmailScrapper::sureQuit()
+{
+    QMessageBox msgBox;
+    msgBox.addButton(QMessageBox::Yes);
+    msgBox.addButton(QMessageBox::No);
+    msgBox.setText("Are you sure you want to quit without saving data?");
+    msgBox.setWindowTitle("Are you sure?");
+    int selection = msgBox.exec();
+    QString contentfile = m_scrappedtext->toPlainText() + "\n";
+    if(selection == QMessageBox::Yes)
+    {
+        m_scrappedtext->clear();
+        m_unscrappedtext->clear();
+    }
+    else if(selection == QMessageBox::No)
+    {
+        if ( g_finalname.isEmpty() ) {
+            QString filenamestring = QFileDialog::getSaveFileName(
+                                         this,
+                                         "Save file",
+                                         mlGetHome(),
+                                         "Text file (*.txt)");
+            if( !filenamestring.isNull() )
+            {
+
+                QFileInfo filename(filenamestring);
+                QString finalname = filename.absoluteFilePath();
+                g_finalname = finalname;
+                saveFile(finalname,contentfile);
+            } // end if
+        }
+        else {
+            saveFile(g_finalname, contentfile);
+        } // end if
+    } // end if
+}
+
 void QEmailScrapper::on_actionGotoBlockStart_triggered()
 {
     g_text->moveCursor(QTextCursor::Start);
@@ -408,4 +452,9 @@ void QEmailScrapper::on_actionGotoBlockStart_triggered()
 void QEmailScrapper::on_actionGotoBlockEnd_triggered()
 {
     g_text->moveCursor(QTextCursor::End);
+}
+
+void QEmailScrapper::on_actionCloseFile_triggered()
+{
+    sureQuit();
 }

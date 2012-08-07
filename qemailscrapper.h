@@ -49,6 +49,7 @@ public:
         QPlainTextEdit *g_text;
         QStringList g_emailList;
         QString g_filename;
+        QString g_finalname;
         QFont g_font;
         int g_fontsize;
     ~QEmailScrapper();
@@ -62,6 +63,7 @@ public:
         void changeSeparation(const QString &separator_one, const QString &separator_two);
         void setFontSize(const int &points);
         void saveFile(const QString &desiredfile, QString &desiredcontent);
+        void sureQuit();
 
         void on_actionFullScreen_triggered();
 
@@ -115,6 +117,8 @@ public:
 
         void on_actionGotoBlockEnd_triggered();
 
+
+        void on_actionCloseFile_triggered();
 
     private:
         Ui::QEmailScrapper *ui;
