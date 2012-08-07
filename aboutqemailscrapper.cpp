@@ -39,7 +39,7 @@ AboutQEmailScrapper::AboutQEmailScrapper(QWidget *parent) :
     QString qtversion_string = ui->mui_version->text();
     qtversion_string.replace("__QTVERSION__",QT_VERSION_STR);
     qtversion_string.replace("__ARCH__",mlGetArch());
-    ui->mui_version->setText(qtversion_string);mlGetVersion;
+    ui->mui_version->setText(qtversion_string);
 
     QString version_string = ui->mui_title->text();
     version_string.replace("__VERSION__",mlGetVersion());
